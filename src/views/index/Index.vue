@@ -1,7 +1,7 @@
 <template>
-  <div class="outer">
+  <div class="login-container">
 
-    <el-form class="form-login" ref="formRef" label-width="120px">
+    <el-form class="login-form" ref="formRef" label-width="120px">
       <h3>用户登录</h3>
 
       <el-form-item label="用户名">
@@ -62,8 +62,8 @@ const loginClick = async () => {
 
   let loginSuccess = await loginService.login(userInfo.name, userInfo.password)
   if(loginSuccess) {
-    console.log('hello')
-    router.push({ name: 'home' })
+
+    router.push({ name: 'dashboard' })
   } else {
     dialogLogin.value = true
     userInfo.name = ''
@@ -76,17 +76,29 @@ const loginClick = async () => {
 
 <style lang="less" scoped>
 
-.outer {
-  margin-top: 100px;
-  .form-login {
-    width: 400px;
+.login-container {
+  min-height: 100%;
+  width: 100%;  
+  background-color: #283443;
+
+  .login-form {
+    position: relative;
+    width: 520px;
+    max-width: 100%;
+    padding: 160px 35px 0;
     margin: 0 auto;
+    overflow: hidden;
+
 
     h3 {
       text-align: center;
     }
+
+
+
   }
 }
+
 
 
 </style>

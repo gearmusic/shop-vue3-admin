@@ -11,9 +11,9 @@ export const routes = [
     component: () => import('@/views/index/Index.vue'),
   },  
   {
-    name: 'home',
-    path: '/home',
-    component: () => import('@/views/home/Home.vue'),
+    name: 'dashboard',
+    path: '/dashboard',
+    component: () => import('@/views/dashboard/Dashboard.vue'),
   },
   
 ]
