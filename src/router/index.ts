@@ -14,8 +14,31 @@ export const routes = [
     name: 'dashboard',
     path: '/dashboard',
     component: () => import('@/views/dashboard/Dashboard.vue'),
-  },
-  
+    children: [
+      {
+        path: '',
+        redirect: '/dashboard/home',
+      },
+      {
+        name: 'home',
+        path: 'home',
+        component: () => import('@/views/home/Home.vue'),
+      },       
+      {
+        name: 'brand',
+        path: 'brand',
+        component: () => import('@/views/brand/Brand.vue'),
+      }, 
+      {
+        name: 'spu',
+        path: 'spu',
+        component: () => import('@/views/spu/Spu.vue'),
+      }, 
+
+    ]
+    
+  }, 
+
 ]
 
 const router = createRouter({

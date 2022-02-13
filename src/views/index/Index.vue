@@ -15,7 +15,9 @@
 
       <el-form-item>
         <el-button :icon="Search" type="primary" @click="loginClick">登录</el-button>
+        
       </el-form-item>
+      <span class="info">(admin 111111)</span>
     </el-form>
 
 
@@ -33,7 +35,9 @@
         <el-button type="primary" @click="dialogLogin = false"
           >Confirm 确认</el-button
         >
+        
       </span>
+      
     </template>
   </el-dialog>
 
@@ -63,7 +67,7 @@ const loginClick = async () => {
   let loginSuccess = await loginService.login(userInfo.name, userInfo.password)
   if(loginSuccess) {
 
-    router.push({ name: 'dashboard' })
+    router.push({ name: 'home' })
   } else {
     dialogLogin.value = true
     userInfo.name = ''
@@ -90,10 +94,17 @@ const loginClick = async () => {
     overflow: hidden;
 
 
+
     h3 {
       text-align: center;
     }
-
+    
+    .info {
+      display: block;
+      text-align: center;
+      line-height: 30px;
+      color: #fff;
+    }
 
 
   }
