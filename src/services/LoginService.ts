@@ -3,7 +3,7 @@ import ILoginService from './ILoginService'
 import { reqLogin } from '@/api'
 import { Status } from '@/types/api'
 
-import { setToken } from '@/libs/auth'
+import { setToken, removeToken } from '@/libs/auth'
 
 const LoginService: ILoginService = {
   async login(username: string, password: string) {
@@ -15,6 +15,10 @@ const LoginService: ILoginService = {
     }
 
     return false 
+  },
+
+  Logout(): void {
+    removeToken()
   }
 }
 

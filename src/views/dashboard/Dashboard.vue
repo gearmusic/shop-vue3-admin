@@ -1,28 +1,22 @@
 <template>
   <el-container class="container">
 
-    <el-aside class="left-side" width="200px">
+    <el-aside class="left-side" ref="sideContainer" :style="{ width: useDashboardStore().sideBarWidth + 'px' }">
 
-      <div class="logo-container">
-        <img src="images/logo.png" alt="" />
-      </div>
-
-      <side-bar></side-bar>
+      <side-bar ref="sideBar"></side-bar>
 
     </el-aside>
 
     <el-container>
       
-      <el-header>
-
-        <nav-bar></nav-bar>
-
+      <el-header class="header">
+        <nav-bar id="nav-bar"></nav-bar>
       </el-header>
       
       <el-main>
-
-        <router-view :key="$route.path"></router-view>
-      
+        <transition name="fade-transform" mode="out-in">
+          <router-view :key="$route.path"></router-view>
+        </transition>
       </el-main>
     </el-container>
 
@@ -32,10 +26,20 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { onMounted, ref, watch } from 'vue'
 
 import SideBar from '@/views/dashboard/side-bar/SideBar.vue';
 import NavBar from '@/views/dashboard/navi-bar/NaviBar.vue';
+
+import useDashboardStore from '@/store/dashboard'
+
+const sideContainer = ref(null)
+const sideBar = ref(null)
+
+onMounted(() => {
+  console.log(sideBar.value! as HTMLElement)
+})
+
 
 
 </script>
@@ -55,6 +59,15 @@ import NavBar from '@/views/dashboard/navi-bar/NaviBar.vue';
       margin: 20px auto;
     }
 
+  }
+
+  .header {
+    padding: 0;
+    height: 50px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
   }
 }
 

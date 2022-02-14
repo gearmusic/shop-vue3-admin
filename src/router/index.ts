@@ -14,25 +14,24 @@ export const routes = [
     name: 'dashboard',
     path: '/dashboard',
     component: () => import('@/views/dashboard/Dashboard.vue'),
-    children: [
-      {
-        path: '',
-        redirect: '/dashboard/home',
-      },
+    children: [     
       {
         name: 'home',
         path: 'home',
         component: () => import('@/views/home/Home.vue'),
+        meta: { title: '首页', category: '首页' }
       },       
       {
         name: 'brand',
         path: 'brand',
         component: () => import('@/views/brand/Brand.vue'),
+        meta: { title: '品牌管理', category: '商品管理' }
       }, 
       {
         name: 'spu',
         path: 'spu',
         component: () => import('@/views/spu/Spu.vue'),
+        meta: { title: 'SPU管理', category: '商品管理' }
       }, 
 
     ]

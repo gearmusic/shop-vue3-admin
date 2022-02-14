@@ -3,15 +3,18 @@
   <el-menu
     active-text-color="#ffd04b"
     background-color="#545c64"
-    class="el-menu-vertical-demo"
     default-active="2"
     text-color="#fff"
-    @open="handleOpen"
-    @close="handleClose"
+    :collapse-transition="false"
+    :collapse="useDashboardStore().sideBarCollapse"
+    :router="true"
+    :style="{width: useDashboardStore().sideBarWidth + 'px'}"
   >
-    <el-menu-item index="0">
+    <el-menu-item index="/dashboard/home">
       <el-icon><HomeFilled /></el-icon>
-      <router-link to="/dashboard/home">首页</router-link>
+      <template #title>
+        首页
+      </template>
     </el-menu-item>
 
     <el-sub-menu index="1">
@@ -33,31 +36,31 @@
       <span>商品管理</span>
       </template>
 
-      <el-menu-item index="2-1">
-        <router-link to="/dashboard/brand">品牌管理</router-link>
+      <el-menu-item index="/dashboard/brand">
+        品牌管理
       </el-menu-item>
       <el-menu-item index="2-2">
         平台属性管理
       </el-menu-item>
-      <el-menu-item index="2-3">
-        <router-link to="/dashboard/spu">Spu管理</router-link>
+      <el-menu-item index="/dashboard/spu">
+        Spu管理
       </el-menu-item>
       <el-menu-item index="2-4">Sku管理</el-menu-item>  
 
     </el-sub-menu>
 
-    <el-menu-item index="3">
+    <el-menu-item>
       <el-icon><location /></el-icon>
-      <a target="_blank" href="http://175.178.85.196">前台网站</a>
+      <template #title>
+        <a target="_blank" href="http://175.178.85.196">前台网站</a>
+      </template>
     </el-menu-item>
+
   </el-menu>
-
-
 
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
 
 import {
   Location,
@@ -66,13 +69,13 @@ import {
   Menu as IconMenu,
 } from '@element-plus/icons-vue'
 
+import useDashboardStore from '@/store/dashboard'
 
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
+import { useRouter } from 'vue-router';
+
+const routers = useRouter().getRoutes()
+
+
 </script>
 
 <style lang="less" scoped>

@@ -9,6 +9,9 @@
 
 import { provide } from 'vue'
 
+import ILoginService from '@/services/ILoginService'
+import LoginService from '@/services/LoginService'
+
 //all business services are privided here
 //这里集中注入当前有效的业务方法 
 /*
@@ -24,12 +27,11 @@ we announce provide type as a interface, so services implements and using is sep
 项目应用层只用关注项目的数据模型和该模型的业务方法即可,也就是只关注接口不关注实现，实现了业务逻辑和实现的分离
 */
 
+
 //登录管理业务方法注入
 //provide login service
-import ILoginService from '@/services/ILoginService'
-import LoginService from '@/services/LoginService'
-
 provide<ILoginService>('ILoginService', LoginService)
+
 
 </script>
 
