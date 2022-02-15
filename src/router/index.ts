@@ -22,9 +22,9 @@ export const routes = [
         meta: { title: '首页', category: '首页' }
       },       
       {
-        name: 'brand',
-        path: 'brand',
-        component: () => import('@/views/brand/Brand.vue'),
+        name: 'trademark',
+        path: 'trademark',
+        component: () => import('@/views/trademark/Trademark.vue'),
         meta: { title: '品牌管理', category: '商品管理' }
       }, 
       {

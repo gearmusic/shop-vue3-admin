@@ -22,8 +22,16 @@ export default defineConfig({
         target: 'http://39.98.123.211:8170/',
         rewrite: path => path.replace(/^\/login-api/,''),
         changeOrigin: true,
-      }
+      },
+
+      '/dev-api': {
+        target: 'http://39.98.123.211:8216/',
+        rewrite: path => path.replace(/^\/dev-api/,''),
+        changeOrigin: true,
+      },      
     }
+
+    
    
   }
 

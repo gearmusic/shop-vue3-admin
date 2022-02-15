@@ -13,7 +13,7 @@
         <nav-bar id="nav-bar"></nav-bar>
       </el-header>
       
-      <el-main>
+      <el-main  class="main">
         <transition name="fade-transform" mode="out-in">
           <router-view :key="$route.path"></router-view>
         </transition>
@@ -37,10 +37,8 @@ const sideContainer = ref(null)
 const sideBar = ref(null)
 
 onMounted(() => {
-  console.log(sideBar.value! as HTMLElement)
+ 
 })
-
-
 
 </script>
 
@@ -69,6 +67,12 @@ onMounted(() => {
     background: #fff;
     box-shadow: 0 1px 4px rgba(0,21,41,.08);
   }
+
+  .main {
+    padding: 0;
+    margin: 0;
+  }
+
 }
 
 </style>

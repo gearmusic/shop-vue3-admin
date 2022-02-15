@@ -36,7 +36,7 @@
       <span>商品管理</span>
       </template>
 
-      <el-menu-item index="/dashboard/brand">
+      <el-menu-item index="/dashboard/trademark">
         品牌管理
       </el-menu-item>
       <el-menu-item index="2-2">

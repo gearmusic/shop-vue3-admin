@@ -1,6 +1,6 @@
 import ILoginService from './ILoginService'
 
-import { reqLogin } from '@/api'
+import { reqLogin } from '@/api/login'
 import { Status } from '@/types/api'
 
 import { setToken, removeToken } from '@/libs/auth'

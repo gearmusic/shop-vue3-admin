@@ -1,6 +1,6 @@
 <template>
   <div class="navi-bar">
-    <el-button class="btn-collapse" :icon="useDashboardStore().sideBarCollapse ? Expand : Fold" @click="btnCollapseClick"></el-button>
+    <el-button class="btn-collapse" size="small" :icon="useDashboardStore().sideBarCollapse ? Expand : Fold" @click="btnCollapseClick"></el-button>
 
     <breadcrumb class="breadcrumb-container" />
 
@@ -11,19 +11,16 @@
 </template>
 
 <script lang="ts" setup>
-import { inject } from 'vue'
-
 import {
   Fold, Expand, Right
 } from '@element-plus/icons-vue'
 
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb.vue'
-import ILoginService from '@/services/ILoginService'
 
 import useDashboardStore from '@/store/dashboard';
 import { useRouter } from 'vue-router'
 
-const loginService: ILoginService = inject('ILoginService')!
+import LoginService from '@/services/LoginService'
 
 const router = useRouter()
 
@@ -32,9 +29,11 @@ const btnCollapseClick = () => {
 }
 
 const btnQuitClick = () => {
-  loginService.Logout()
+  LoginService.Logout()
   router.push({ name: 'index' })
 }
+
+
 
 </script>
 

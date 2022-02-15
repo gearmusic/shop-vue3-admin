@@ -44,17 +44,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, inject } from 'vue'
+import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { Search } from '@element-plus/icons-vue'
 
-import ILoginService from '@/services/ILoginService'
+import LoginService from '@/services/LoginService'
 
-//界面层只关注界面数据, 交给注入inject的业务逻辑接口实现类，并等待业务方法的执行结果，再进行页面响应
-
-//取到当前注入的业务对象
-const loginService: ILoginService = inject('ILoginService')!
 
 const userInfo = reactive({ name: '', password: '' })
 
@@ -64,7 +60,7 @@ const router = useRouter()
 
 const loginClick = async () => {
 
-  let loginSuccess = await loginService.login(userInfo.name, userInfo.password)
+  let loginSuccess = await LoginService.login(userInfo.name, userInfo.password)
   if(loginSuccess) {
 
     router.push({ name: 'home' })
