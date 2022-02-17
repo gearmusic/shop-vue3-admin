@@ -39,7 +39,7 @@
       <el-menu-item index="/dashboard/trademark">
         品牌管理
       </el-menu-item>
-      <el-menu-item index="2-2">
+      <el-menu-item index="/dashboard/attr">
         平台属性管理
       </el-menu-item>
       <el-menu-item index="/dashboard/spu">

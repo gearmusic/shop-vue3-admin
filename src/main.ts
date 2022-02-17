@@ -8,8 +8,6 @@ import App from '@/App.vue'
 import '@/assets/css/base.less'
 import 'element-plus/dist/index.css'
 
-import Toast from '@/components/toast/Toast.vue'
-
 //创建pinia对象
 const pinia = createPinia()
 
@@ -19,5 +17,4 @@ app
 .use(router)
 .use(pinia)
 .use(ElementPlus)
-.component('toast', Toast)
 .mount('#app')

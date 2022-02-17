@@ -2,7 +2,7 @@ import request from '@/libs/request'
 
 import { Trademark } from '@/types/trademark'
 
-//login
+
 export const reqTrademarkList = (pageSize: number, pageNo: number) => request({ url: `/admin/product/baseTrademark/${pageNo}/${pageSize}`, method: 'get' })
 
 export const reqTrademark = (id: number) => request({ url: `/admin/product/baseTrademark/get/${id}`, method: 'get' })

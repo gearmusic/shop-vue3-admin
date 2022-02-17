@@ -12,7 +12,7 @@ import {
 
 } from '@/api/trademark'
 
-const trademarkStore = defineStore('trademark', {
+const useTrademarkStore = defineStore('trademark', {
   state : () => ({
     trademarkList : [] as Trademark[],
     pageInfo: {} as PageInfo
@@ -67,4 +67,4 @@ const trademarkStore = defineStore('trademark', {
 
 })
 
-export default trademarkStore
+export default useTrademarkStore

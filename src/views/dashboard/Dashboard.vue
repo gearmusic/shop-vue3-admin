@@ -14,9 +14,7 @@
       </el-header>
       
       <el-main  class="main">
-        <transition name="fade-transform" mode="out-in">
-          <router-view :key="$route.path"></router-view>
-        </transition>
+        <router-view></router-view>
       </el-main>
     </el-container>
 
@@ -26,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import SideBar from '@/views/dashboard/side-bar/SideBar.vue';
 import NavBar from '@/views/dashboard/navi-bar/NaviBar.vue';

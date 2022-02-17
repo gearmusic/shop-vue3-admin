@@ -20,7 +20,13 @@ export const routes = [
         path: 'home',
         component: () => import('@/views/home/Home.vue'),
         meta: { title: '首页', category: '首页' }
-      },       
+      },     
+      {
+        name: 'attr',
+        path: 'attr',
+        component: () => import('@/views/attr/Attr.vue'),
+        meta: { title: '平台属性管理', category: '商品管理' }
+      },         
       {
         name: 'trademark',
         path: 'trademark',

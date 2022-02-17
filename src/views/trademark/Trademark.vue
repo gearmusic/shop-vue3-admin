@@ -82,7 +82,6 @@
     </template>
   </el-dialog>
 
-
   <toast ref="toast" />
 
 </template>
@@ -95,8 +94,7 @@ import { Trademark } from '@/types/trademark'
 
 import type {
   UploadFile,
-  ElUploadProgressEvent,
-  ElFile,
+  ElUploadProgressEvent
 } from 'element-plus/es/components/upload/src/upload.type'
 
 import useTrademarkStore from '@/store/trademark'
@@ -131,6 +129,16 @@ const showUpdate = async (id: number) => {
 }
 
 const clickSave = async () => {
+  if(form.tmName.trim() === '') {
+    toast.value.showMessage('品牌名称不能为空！')
+    return
+  }
+
+  if(form.logoUrl.trim() === '') {
+    toast.value.showMessage('品牌Logo不能为空！')
+    return
+  }
+
   if(form.id === 0){
     if(await tradeStore.postTrademark(form)) {
       toast.value.showMessage('操作执行成功')
@@ -178,17 +186,17 @@ onMounted(async () => {
 
 <style lang="less" scoped>
 .container {
-  height: 100%;
 
   .header {
-    height: 30px;
+    height: 40px;
     .btn-add {
-      margin-top: 10px;
+      margin-top: 5px;
     }
   }
 
   .main {
-    height: 100%;
+    height: calc(100vh - 40px - 60px - 50px);
+    overflow: auto;
 
     .table {
 
@@ -199,11 +207,11 @@ onMounted(async () => {
   }
 
   .footer {
-    height: 70px;
+    height: 50px;
     text-align: center;
   
     .pagination {
-      margin: 0 auto;
+      margin: 10px auto;
       width: 450px;
     }
   }
