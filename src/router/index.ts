@@ -38,6 +38,12 @@ export const routes = [
         path: 'spu',
         component: () => import('@/views/spu/Spu.vue'),
         meta: { title: 'SPU管理', category: '商品管理' }
+      },  
+      {
+        name: 'sku',
+        path: 'sku',
+        component: () => import('@/views/sku/Sku.vue'),
+        meta: { title: 'SKU管理', category: '商品管理' }
       }, 
 
     ]

@@ -2,7 +2,7 @@
   <el-container class="container">
 
     <el-header class="header">
-      <category-select @category-id-selected="categoryIdSelected"></category-select>
+      <category-select v-model:selectCategoryId="selectCategoryId"></category-select>
     </el-header>
     
     <el-main v-if="!editModel" class="main">
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 
 import { SelectCategoryId } from '@/types/category'
 
@@ -50,18 +50,13 @@ const editModel = ref(false)
 //属性编号的传递器
 const attrId = ref(0)
 
-
 //三级分类选择结果存放器
 const selectCategoryId = reactive({ categoryId1: '',  categoryId2: '', categoryId3: '' } as SelectCategoryId)
 
-const categoryIdSelected = async (_selectCategoryId: SelectCategoryId) => {
-  selectCategoryId.categoryId1 = _selectCategoryId.categoryId1
-  selectCategoryId.categoryId2 = _selectCategoryId.categoryId2
-  selectCategoryId.categoryId3 = _selectCategoryId.categoryId3
-  
-  attrStore.getAttrsList(selectCategoryId)
-  editModel.value = false
-}
+watch(selectCategoryId, async () => {
+  editModel.value = !(selectCategoryId.categoryId1 > 0 || selectCategoryId.categoryId2 > 0 || selectCategoryId.categoryId3 > 0)
+  selectCategoryId.categoryId3 > 0 && (await attrStore.getAttrsList(selectCategoryId))
+})
 
 
 const openEditForm = (_attrId: number) => {

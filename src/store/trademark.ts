@@ -5,6 +5,7 @@ import { Trademark } from '@/types/trademark'
 
 import { 
   reqTrademarkList,
+  reqTrademarkListAll,
   reqTrademark,
   postTrademark,
   putTrademark,
@@ -15,7 +16,8 @@ import {
 const useTrademarkStore = defineStore('trademark', {
   state : () => ({
     trademarkList : [] as Trademark[],
-    pageInfo: {} as PageInfo
+    pageInfo: {} as PageInfo,
+    trademarkAllList: [] as Trademark[]
   }),
   getters: {
 
@@ -26,7 +28,10 @@ const useTrademarkStore = defineStore('trademark', {
       this.pageInfo = (await reqTrademarkList(pageSize, pageNo)).data.data
       this.trademarkList.length = 0
       this.trademarkList.push(...this.pageInfo.records)
-    }
+    },
+    async getAllList() {
+      this.trademarkAllList = (await reqTrademarkListAll()).data.data
+    } 
     , async getTrademark(id: number) {
       let result = (await reqTrademark(id)).data.data
 

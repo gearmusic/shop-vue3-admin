@@ -44,42 +44,46 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive } from 'vue'
+import { nextTick } from 'vue'
 
 import { SelectCategoryId } from '@/types/category'
 import useCatagoryStore from '@/store/category'
 
-const selectCategoryId = reactive({ categoryId1: '', categoryId2: '', categoryId3: '' } as SelectCategoryId)
-
 const categoryStore = useCatagoryStore()
 
+const props = defineProps<{
+  selectCategoryId: SelectCategoryId
+}>()
+
 const emit= defineEmits<{
-  (e: 'categoryIdSelected', selectCategoryId: SelectCategoryId): void
+  (e: 'update:selectCategoryId', selectCategoryId: SelectCategoryId): void
 }>()
 
 const categoryChange = (depth: number, id: number) => {
   switch(depth) {
     case 0: 
       categoryStore.getCategory2List(id)
-      selectCategoryId.categoryId2 = ''
-      selectCategoryId.categoryId3 = ''
+      props.selectCategoryId.categoryId2 = ''
+      props.selectCategoryId.categoryId3 = ''
       
       break;
     case 1:
       categoryStore.getCategory3List(id)
-      selectCategoryId.categoryId3 = ''
+      props.selectCategoryId.categoryId3 = ''
       break;
     case 2:
       break;
   }
 
-  emit('categoryIdSelected', selectCategoryId)
+  emit('update:selectCategoryId', props.selectCategoryId)
 }
 
-
-onMounted(() => {
+nextTick(() => {
   categoryStore.getCategory1List()
 })
+
+
+
 
 </script>
 

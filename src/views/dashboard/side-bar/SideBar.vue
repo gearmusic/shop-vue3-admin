@@ -45,7 +45,9 @@
       <el-menu-item index="/dashboard/spu">
         Spu管理
       </el-menu-item>
-      <el-menu-item index="2-4">Sku管理</el-menu-item>  
+      <el-menu-item index="/dashboard/sku">
+        Sku管理
+      </el-menu-item>
 
     </el-sub-menu>
 
