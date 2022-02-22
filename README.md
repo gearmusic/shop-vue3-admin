@@ -11,8 +11,8 @@ The Project is helpful for learning lastest(to 2022/02) vue 3 framework(vite + t
 
 ## 项目前台网站 Fore-End Website
 
-http://http://175.178.85.196/
+http://175.178.85.196/
 
-## 项目网站后台
+## 项目网站后台 Back-End Website
 
 http://175.178.85.196:443/

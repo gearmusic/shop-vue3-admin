@@ -1,50 +1,46 @@
 <template>
-  <el-container class="edit-container">
-    <el-header class="header">
-      <el-button :disabled="addBtnDisabled" class="btn-add" type="success" :icon="Plus" @click="emit('addIt')">
-        添加SPU
-      </el-button>
-      (图片是按要求整理传上去了，估计后台把响应接口关闭，所以没有显示)
-    </el-header>
-    <el-main class="main">
-      <el-table
-        class="table"
-        :border="true"
-        :data="spuList" 
-        tableLayout="auto"
-        width="100%"
-        >
-        <el-table-column prop="id" label="序号" width="100px" />
+  <el-table
+    class="table"
+    :border="true"
+    :data="spuList" 
+    tableLayout="auto"
+    width="100%"
+    >
+    <el-table-column prop="id" label="序号" width="100px" />
 
-        <el-table-column prop="spuName" label="SPU名称" width="300px" />
+    <el-table-column prop="spuName" label="SPU名称" width="280px" />
 
-        <el-table-column prop="description" label="SPU描述">
+    <el-table-column prop="description" label="SPU描述" width="280px" />
 
-        </el-table-column>
+    <el-table-column label="销售属性">
+      <template #default="{ row, $index }">
+        <div class="tag-row" v-for="(item,index) in row.spuSaleAttrList" :key="index" style="width: 100%;"> 
+          <span>{{ item.saleAttrName }}</span> :
+          <el-tag :type="($index%2 === 0 ? 'success' : 'warning')" class="tag" v-for="(itemChild, indexChild) in item.spuSaleAttrValueList" :key="index + '-' + indexChild">{{ itemChild.saleAttrValueName }}</el-tag>
+        </div>
+      </template>
 
-        <el-table-column label="操作" width="240px">
+    </el-table-column>
 
-          <template #default="{ row }">
-            <el-button size="small" :icon="Monitor" type="success" @click="emit('showSku', row.id)"></el-button>
-            <el-button size="small" :icon="Edit" type="primary" @click="emit('editIt', row.id)"></el-button>
-            <el-button size="small" :icon="Delete" type="warning" @click="emit('deleteIt', row.id)"></el-button>
-          </template>
+    <el-table-column label="数据操作" width="130px">
 
-        </el-table-column>
-      </el-table>
-    </el-main>
-    <el-footer class="footer">
-        <el-pagination 
-          class="btn-panel" 
-          background 
-          layout="prev, pager, next" 
-          :total="pageInfo.total"
-          :page-size="pageInfo.size" 
-          @current-change="currentChange"
-          >
-        </el-pagination>
-    </el-footer>  
-  </el-container>
+      <template #default="{ row }">
+
+        <el-button size="small" :icon="Edit" type="primary" @click="emit('editIt', row.id)"></el-button>
+        <el-button size="small" :icon="Delete" type="warning" @click="emit('deleteIt', row.id)"></el-button>
+      </template>
+
+    </el-table-column>
+
+    <el-table-column label="关联SKU操作" width="130px">
+
+      <template #default="{ row }">
+        <el-button size="small" :icon="Monitor" type="success" @click="emit('showSkuList', row.id)"></el-button>
+        <el-button size="small" :icon="Plus" type="success" @click="emit('addSku', row.id)"></el-button>
+      </template>
+
+    </el-table-column>
+  </el-table>
 </template>
 
 <script lang="ts" setup>
@@ -54,61 +50,27 @@ import { PageInfo } from '@/types/api'
 import { Plus, Edit, Delete, Monitor } from '@element-plus/icons-vue'
 
 defineProps<{
-  spuList: Spu[],
-  pageInfo: PageInfo,
-  addBtnDisabled: boolean
+  spuList: Spu[]
 }>()
 
 const emit= defineEmits<{
-  (e: 'pageChange', pageNo: number): void,
-  (e: 'showSku', id: number): void,
-  (e: 'addIt'): void,
   (e: 'editIt', id: number): void,
   (e: 'deleteIt', id: number): void,
+  (e: 'addSku', id: number): void,
+  (e: 'showSkuList', id: number): void,
 }>()
-
-const currentChange = (pageNo: number) => {
-  emit('pageChange', pageNo)
-}
 
 </script>
 
 <style lang="less" scoped>
-.edit-container {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  .header {
-    width: 100%;
-    height: 80px;
-    line-height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #eee;
+.table {
+  .tag-row {
+    line-height: 30px;
 
-    span {
-      font-size:18px;
-    }
-
-    .icon-close {
-      width: 1em; 
-      height: 1em; 
-      margin-right: 8px; 
-      cursor: pointer;
+    .tag {
+      margin: 0 10px 0 0;
     }
   }
 
-  .footer {
-    padding: 0;
-    margin: 0;    
-    height: 80px;
-    line-height: 80px;
-
-    .btn-panel {
-      width: 380px;
-      margin: 0 auto;
-    }
-  }
 }
 </style>

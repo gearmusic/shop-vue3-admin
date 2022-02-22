@@ -2,76 +2,100 @@
   <el-container class="container">
 
     <el-header class="header">
-      <category-select v-model:selectCategoryId="selectCategoryId"></category-select>
+      <category-select :category="categoryStore.category" @change="categoryChanged"></category-select>
     </el-header>
     
-    <el-main v-if="!editModel" class="main">
+    <el-main class="main">
 
       <attr-grid
-        :disabled="selectCategoryId.categoryId3 == ''"
-        @rowAddClick="openEditForm(0)"
-        @rowEditClick="openEditForm"
+        :attr-list="attrStore.attrsListOfCategory3"
+        @row-add-click="rowAddClick"
+        @rowEditClick="rowEditClick"
         @rowDeleteClick="deleteAttr"
-        />
-
-    </el-main>
-
-    <el-main v-else>
-
-      <attr-editor 
-        :attr-id="attrId" 
-        :category-id="selectCategoryId.categoryId3"
-        @closeFormClick="closeEditForm"
         />
 
     </el-main>
 
   </el-container>
 
+  <el-dialog
+    v-model="dialogAttr"
+    title=""
+    width="50%"
+    top="10vh"
+  >
+    <attr-editor 
+      :attr="attrStore.attrObj"
+      @closeFormClick="closeEditForm"
+      @save-it="saveAttr"
+      />
+  </el-dialog>
+
+
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue'
-
-import { SelectCategoryId } from '@/types/category'
+import { ref } from 'vue'
 
 import useAttrStore from '@/store/attr'
+import useCategoryStore from '@/store/category'
+import { ElMessage } from 'element-plus'
 
 import CategorySelect from '@/components/category-select/CategorySelect.vue'
 import AttrGrid from '@/views/attr/attr-grid/AttrGrid.vue' 
 import AttrEditor from '@/views/attr/attr-editor/AttrEditor.vue' 
 
-//穿透组件的数据操作器
 const attrStore = useAttrStore()
+const categoryStore = useCategoryStore()
 
-//进出编辑模式的控制器
-const editModel = ref(false)
+const dialogAttr = ref(false)
 
-//属性编号的传递器
-const attrId = ref(0)
+const categoryChanged = async (category3Id: number | '') => {
+  attrStore.attrsList = []
+  if(category3Id > 0) {
+    await attrStore.getAttrsList(categoryStore.category)
+  }
+}
 
-//三级分类选择结果存放器
-const selectCategoryId = reactive({ categoryId1: '',  categoryId2: '', categoryId3: '' } as SelectCategoryId)
+const rowAddClick = () => {
+  if(categoryStore.category.category3Id > 0) {
+    attrStore.attrObj = {
+      id: 10000 + Math.ceil(Math.random() * 5000),
+      attrName: '',
+      categoryId: categoryStore.category.category3Id as number,
+      categoryLevel: 3,
+      attrValueList: []
+    }
+    dialogAttr.value = true
+  } else {
+    ElMessage({
+      showClose: true,
+      message: '请先选择平台属性的三级分类',
+      type: 'error',
+    })
+  }
 
-watch(selectCategoryId, async () => {
-  editModel.value = !(selectCategoryId.categoryId1 > 0 || selectCategoryId.categoryId2 > 0 || selectCategoryId.categoryId3 > 0)
-  selectCategoryId.categoryId3 > 0 && (await attrStore.getAttrsList(selectCategoryId))
-})
+}
 
-
-const openEditForm = (_attrId: number) => {
-  attrId.value = _attrId
-  editModel.value = true
+const rowEditClick = (index: number) => {
+  attrStore.attrObj = attrStore.attrsListOfCategory3[index]
+  dialogAttr.value = true
 }
 
 const deleteAttr = async (attrId: number) => {
   await attrStore.deleteAttr(attrId)
-  await attrStore.getAttrsList(selectCategoryId)
+  await attrStore.getAttrsList(categoryStore.category)
 }
 
 const closeEditForm = async () => {
-  await attrStore.getAttrsList(selectCategoryId)
-  editModel.value = false
+  await attrStore.getAttrsList(categoryStore.category)
+  dialogAttr.value = false
+}
+
+const saveAttr = async () => {
+  await attrStore.saveAttr(attrStore.attrObj)
+  await attrStore.getAttrsList(categoryStore.category)
+  dialogAttr.value = false
 }
 
 </script>

@@ -71,8 +71,6 @@
         </el-upload>
       </el-form-item>
 
-
-
     </el-form>
     <template #footer>
       <div class="dialog-footer"  style="text-align: center;">
@@ -82,13 +80,12 @@
     </template>
   </el-dialog>
 
-
-  <toast ref="toast" />
-
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
+import { nextTick, reactive, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+
 import { Plus, Edit, Delete } from '@element-plus/icons-vue'
 
 import { Trademark } from '@/types/trademark'
@@ -99,8 +96,6 @@ import type {
 } from 'element-plus/es/components/upload/src/upload.type'
 
 import useTrademarkStore from '@/store/trademark'
-
-import Toast from '@/components/toast/Toast.vue'
 
 const tradeStore = useTrademarkStore()
 
@@ -131,28 +126,49 @@ const showUpdate = async (id: number) => {
 
 const clickSave = async () => {
   if(form.tmName.trim() === '') {
-    toast.value.showMessage('品牌名称不能为空！')
+    ElMessage({
+      message: '品牌名称不能为空！',
+      type: 'warning',
+    })
+
     return
   }
 
   if(form.logoUrl.trim() === '') {
-    toast.value.showMessage('品牌Logo不能为空！')
+    ElMessage({
+      message: '品牌Logo不能为空！',
+      type: 'warning',
+    })
+
     return
   }
 
   if(form.id === 0){
     if(await tradeStore.postTrademark(form)) {
-      toast.value.showMessage('操作执行成功')
+      ElMessage({
+        message: '操作执行成功',
+        type: 'success',
+      })
       dialogSave.value = false
     }else{
-      toast.value.showMessage('操作执行失败')
+      ElMessage({
+        message: '操作执行失败',
+        type: 'warning',
+      })
     }
   } else {
     if(await tradeStore.putTrademark(form)) {
-      toast.value.showMessage('操作执行成功')
+      ElMessage({
+        message: '操作执行成功',
+        type: 'success',
+      })
+
       dialogSave.value = false
     }else{
-      toast.value.showMessage('操作执行失败')
+      ElMessage({
+        message: '操作执行失败',
+        type: 'warning',
+      })
     }
   }
 
@@ -164,9 +180,15 @@ const currentChange = (pageNo: number) => {
 
 const deleteTrademark = async (id: number) => {
   if(await tradeStore.deleteTrademark(id)) {
-    toast.value.showMessage('操作执行成功')
+    ElMessage({
+      message: '操作执行成功',
+      type: 'success',
+    })
   }else{
-    toast.value.showMessage('操作执行失败')
+    ElMessage({
+      message: '操作执行失败',
+      type: 'warning',
+    })
   }
 
 }
@@ -179,8 +201,8 @@ const handleAvatarSuccess = async (res: ElUploadProgressEvent, file: UploadFile)
   imageUrl.value = URL.createObjectURL(file.raw)
 }
 
-onMounted(async () => {
-  await tradeStore.getPageList(10, 1)
+nextTick(async () => {
+  await tradeStore.getPageList(5, 1)
 })
 
 </script>

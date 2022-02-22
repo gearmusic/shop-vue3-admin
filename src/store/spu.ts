@@ -27,6 +27,11 @@ const useSpuStore = defineStore('spu', {
         this.pageInfo = (await reqSpuList(category3Id, pageSize, pageNo)).data.data
         this.spuList.length = 0
         this.spuList.push(...this.pageInfo.records)
+        
+        this.spuList.forEach(async m => {
+          m.spuSaleAttrList = []
+          m.spuSaleAttrList.push(...(await this.GetSpuSaleAttrList(m.id)))
+        });
       }
     },
     getNewObj(category3Id: number) {
@@ -40,6 +45,18 @@ const useSpuStore = defineStore('spu', {
         tmId: 0
       }
     }, 
+    async GetSpuSaleAttrList(spuId: number) {
+      let spu = (await getIt(spuId)).data.data as Spu
+  
+      spu.spuSaleAttrList.forEach(m => {
+        m.spuSaleAttrValueList.forEach(n => {
+          n.value = n.saleAttrValueName!
+          n.selected = false
+        })
+      })
+
+      return spu.spuSaleAttrList
+    },    
     async loadObj(spuId: number) {
       this.spuObj = (await getIt(spuId)).data.data
 
@@ -54,20 +71,6 @@ const useSpuStore = defineStore('spu', {
         })
       }
 
-      /*
-      this.spuObj.spuImageList = [] as SpuImg[]
-      this.spuObj.spuImageList!.push({
-        name: 'fsds',
-        url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-        uid: 100,
-        id: 100,
-        imgUrl: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100',
-        imgName: 'fssd',  
-        spuId: 22        
-      })
-      */
-
-      //所有checked属性设置初值
       this.spuObj.spuSaleAttrList.forEach(m => {
         m.spuSaleAttrValueList.forEach(n => {
           n.value = n.saleAttrValueName!
@@ -85,15 +88,6 @@ const useSpuStore = defineStore('spu', {
 
       return false
     },
-    /*
-    resetIsChecked() {
-      this.spuObj.spuSaleAttrList.forEach(m => {
-        m.spuSaleAttrValueList.forEach(n => {
-          n.isChecked = false
-        })  
-      })
-    }
-    */
     async saveIt() {
       //数据整理
       this.spuObj.spuSaleAttrList.forEach((m, index_m) => {

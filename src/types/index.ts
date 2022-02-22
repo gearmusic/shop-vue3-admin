@@ -10,3 +10,9 @@ export interface FileUploadImg {
   name: string,
   url: string
 }
+
+//为了使用下拉选择增加的属性
+export interface SelectItem {
+  id: number,
+  text: string
+}

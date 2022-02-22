@@ -21,9 +21,9 @@
           tableLayout="auto"
           width="100%"
           >
-          <el-table-column prop="id" label="序号" width="100px" />
+          <el-table-column prop="id" label="序号" width="80px" />
 
-          <el-table-column prop="saleAttrName" label="属性名称" width="280px" />
+          <el-table-column prop="saleAttrName" label="属性名称" width="220px" />
 
           <el-table-column label="属性值管理">
             
@@ -33,7 +33,7 @@
 
           </el-table-column>
 
-          <el-table-column label="操作" width="240px">
+          <el-table-column label="操作" width="80px">
 
             <template #default="{ row, $index }">
               <el-button size="small" :icon="Delete" type="warning" @click="deleteSaleAttr($index)"></el-button>

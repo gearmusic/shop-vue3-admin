@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia'
 
-import { Status } from '@/types/api'
-import { SelectCategoryId } from '@/types/category'
-import { Attr, AttrValue } from '@/types/attr'
-
+import { Attr } from '@/types/attr'
+import { Category } from '@/types/category'
 
 import { 
   reqAttrList,
@@ -13,37 +11,37 @@ import {
 
 const useAttrStore = defineStore('attr', {
   state : () => ({
-    attrsList: [] as Attr[]
+    attrsList: [] as Attr[],
+    attrObj: {} as Attr
   }),
   getters: {
     attrsListOfCategory3(state) {
       return state.attrsList.filter(m => m.categoryLevel === 3)
-    }
+    },  
   },
   actions: {
-    async getAttrsList(selectCategortId: SelectCategoryId) {
-      if(selectCategortId.categoryId3 !== '') {
+    async getAttrsList(category: Category) {
+      if(category.category3Id !== '') {
 
-        this.attrsList = (await reqAttrList(selectCategortId)).data.data
+        this.attrsList = (await reqAttrList(category)).data.data
 
         this.attrsList.forEach(m => {
           m.attrValueList.forEach(n => {
             n.selected = false
+            n.value = n.valueName
           })
         })
 
       }
     },
+
     async saveAttr(attr: Attr) {
       await postUpdAttr(attr)
     },
     async deleteAttr(attrId: number) {
       await deletetAttr(attrId)
     },
-
-
   }
-
 })
 
 export default useAttrStore

@@ -1,16 +1,14 @@
 <template>
   <div>
     <el-row class="row">
-      <el-button class="btn-add" type="success" :icon="Plus" @click="emit('rowAddClick')" :disabled="disabled">
+      <el-button class="btn-add" type="success" :icon="Plus" @click="emit('rowAddClick')">
         新增
       </el-button>
-
-      <span> 由于后台设了限制，新增功能比较玄学，你得大概猜测相应模块允许的id范围就能成功，修改非系统默认是没问题的</span>
     </el-row>    
 
     <el-table
       class="table"
-      :data="attrStore.attrsListOfCategory3" 
+      :data="attrList" 
       :border="true" 
       tableLayout="auto"
       width="100%"
@@ -24,16 +22,14 @@
           <el-tag class="tag" type="success" v-for="item in row.attrValueList" :key="item.id">
             {{ item.valueName }}
           </el-tag>
-        </template>
-
-        
+        </template>     
       </el-table-column>
 
       <el-table-column label="操作" width="220px">
 
-        <template #default="{ row }">
-          <el-button :icon="Edit" type="primary" @click="emit('rowEditClick', row.id)" :disabled="disabled">修改</el-button>
-          <el-button :icon="Delete" type="warning" @click="emit('rowDeleteClick', row.id)" :disabled="disabled">删除</el-button>
+        <template #default="{ row, $index }">
+          <el-button :icon="Edit" type="primary" @click="emit('rowEditClick', $index)">修改</el-button>
+          <el-button :icon="Delete" type="warning" @click="emit('rowDeleteClick', row.id)">删除</el-button>
         </template>
 
       </el-table-column>
@@ -44,12 +40,10 @@
 <script lang="ts" setup>
 import { Plus, Edit, Delete } from '@element-plus/icons-vue'
 
-import useAttrStore from '@/store/attr'
+import { Attr } from '@/types/attr'
 
-const attrStore = useAttrStore()
-
-defineProps<{
-  disabled: boolean
+const props = defineProps<{
+  attrList: Attr[]
 }>()
 
 const emit= defineEmits<{
@@ -57,7 +51,6 @@ const emit= defineEmits<{
   (e: 'rowEditClick', attrId: number): void,
   (e: 'rowDeleteClick', attrId: number): void
 }>() 
-
 
 </script>
 
@@ -69,7 +62,6 @@ const emit= defineEmits<{
 
   .row {
     height: 50px;
-
 
   }
 

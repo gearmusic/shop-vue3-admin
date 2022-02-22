@@ -1,6 +1,7 @@
 <template>
-  <div>
-    Home Home Home
+  <div style="margin: 0 auto;">
+    Home Home Home Home Home Home 
+
   </div>
 </template>
 

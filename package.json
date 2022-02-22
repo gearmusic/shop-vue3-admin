@@ -11,6 +11,7 @@
     "axios": "^0.25.0",
     "element-plus": "^2.0.1",
     "js-cookie": "^3.0.1",
+    "mitt": "^3.0.0",
     "vue": "^3.2.25"
   },
   "devDependencies": {

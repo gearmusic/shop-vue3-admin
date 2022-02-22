@@ -9,46 +9,43 @@
         <CircleClose class="icon-close" @click="emit('formClose')"></CircleClose>  
       </el-header>
       <el-main class="main">
-
-      <el-form :form="spu">
-        <el-row>
-          <el-col :span="11">
-            <el-row>
-              <el-form-item label="SPU名称" :label-width="70" style="width: 100%;">
-                <el-input v-model="spu.spuName" type="input"></el-input>
+        <el-form>
+          <el-row>
+            <el-col :span="11">
+              <el-row>
+                <el-form-item label="SPU名称" :label-width="70" style="width: 100%;">
+                  <el-input v-model="spu.spuName" type="input"></el-input>
+                </el-form-item>
+              </el-row>
+              <el-row>
+                <el-form-item label="所属品牌" :label-width="70" style="width: 100%;">
+                  <brand-select v-model:trademarkId="spu.tmId" style="width: 100%;" />
+                </el-form-item>
+              </el-row>
+            </el-col>
+            <el-col :span="2"></el-col>          
+            <el-col :span="11">
+              <el-form-item label="SPU描述" :label-width="70">
+                <el-input v-model="spu.description" type="textarea" rows="3"></el-input>
               </el-form-item>
-            </el-row>
-            <el-row>
-              <el-form-item label="所属品牌" :label-width="70" style="width: 100%;">
-                <brand-select v-model:trademarkId="spu.tmId" style="width: 100%;" />
+            </el-col>
+          </el-row>
+
+          <el-row>
+            <el-col :span="24">   
+              <el-form-item label="SPU图片" :label-width="70">
+                <file-uploader :fileList="(spu.spuImageList as UploadFile[])" />
               </el-form-item>
-            </el-row>
-          </el-col>
-          <el-col :span="2"></el-col>          
-          <el-col :span="11">
-            <el-form-item label="SPU描述" :label-width="70">
-              <el-input v-model="spu.description" type="textarea" rows="3"></el-input>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :span="24">   
-            <el-form-item label="SPU图片" :label-width="70">
-              <file-uploader :fileList="(spu.spuImageList as UploadFile[])" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="24">
-            <el-form-item label="属性管理" :label-width="70">
-              <sale-attr-grid v-model:spuSaleAttrList="spu.spuSaleAttrList" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-          
-      </el-form>
-
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="销售属性" :label-width="70">
+                <sale-attr-grid v-model:spuSaleAttrList="spu.spuSaleAttrList" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
       </el-main>
       <el-footer class="footer">
         <div class="btn-panel">
