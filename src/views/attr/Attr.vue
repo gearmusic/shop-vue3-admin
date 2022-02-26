@@ -60,7 +60,7 @@ const categoryChanged = async (category3Id: number | '') => {
 const rowAddClick = () => {
   if(categoryStore.category.category3Id > 0) {
     attrStore.attrObj = {
-      id: 10000 + Math.ceil(Math.random() * 5000),
+      id: 12000 + Math.ceil(Math.random() * 1000),
       attrName: '',
       categoryId: categoryStore.category.category3Id as number,
       categoryLevel: 3,
