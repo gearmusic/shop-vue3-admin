@@ -21,11 +21,11 @@
 
       <template #title>
         <el-icon><Key /></el-icon>
-        <span>权限管理</span>
+        <span>系统管理</span>
       </template>
 
-      <el-menu-item index="1-1">item one</el-menu-item>
-      <el-menu-item index="1-2">item one</el-menu-item>
+      <el-menu-item index="/dashboard/user">用户管理</el-menu-item>
+      <el-menu-item index="/dashboard/role">角色管理</el-menu-item>
 
     </el-sub-menu>
 

@@ -40,24 +40,24 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import * as dayjs from 'dayjs'
+import moment from 'moment'
 
 const activeName = ref('sale')
 
 const selectDate = reactive([])
 
 const setDay = () => {
-  
-  const day = dayjs(dayjs(), 'YYYY-MM-DD')
+
+  const day = new Date()
 
   selectDate.length = 0
   selectDate.push(day, day)
 }
 
 const setWeek = () => {
-  
-  const start = dayjs(dayjs().day(0), 'YYYY-MM-DD')
-  const end = dayjs(dayjs().day(6), 'YYYY-MM-DD')
+
+  const start = moment().weekday(0)
+  const end = moment().weekday(6)
 
   selectDate.length = 0
   selectDate.push(start, end)
@@ -65,8 +65,8 @@ const setWeek = () => {
 
 const setMonth = () => {
   
-  const start = dayjs(dayjs().date(1), 'YYYY-MM-DD')
-  const end = dayjs(dayjs().date(dayjs().daysInMonth()), 'YYYY-MM-DD')
+  const start = moment().startOf('month')
+  const end = moment().endOf('month')
 
   selectDate.length = 0
   selectDate.push(start, end)
@@ -74,8 +74,8 @@ const setMonth = () => {
 
 const setYear = () => {
   
-  const start = dayjs(dayjs().month(0).date(1), 'YYYY-MM-DD')
-  const end = dayjs(dayjs().month(11).date(31), 'YYYY-MM-DD')
+  const start = moment().startOf('year')
+  const end = moment().endOf('year')
 
   selectDate.length = 0
   selectDate.push(start, end)

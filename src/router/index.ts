@@ -45,11 +45,20 @@ export const routes = [
         component: () => import('@/views/sku/Sku.vue'),
         meta: { title: 'SKU管理', category: '商品管理' }
       },
-       
 
-
+      {
+        name: '用户管理',
+        path: 'user',
+        component: () => import('@/views/user/User.vue'),
+        meta: { title: '用户管理', category: '系统管理' }
+      },
+      {
+        name: '角色管理',
+        path: 'role',
+        component: () => import('@/views/role/Role.vue'),
+        meta: { title: '角色管理', category: '角色管理' }
+      }
     ]
-    
   }, 
 
 ]
