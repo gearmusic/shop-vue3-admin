@@ -25,7 +25,7 @@ export default defineConfig({
       },
 
       '/dev-api': {
-        target: 'http://39.98.123.211:8216/',
+        target: 'http://39.98.123.211:8510/',
         rewrite: path => path.replace(/^\/dev-api/,''),
         changeOrigin: true,
       },      
